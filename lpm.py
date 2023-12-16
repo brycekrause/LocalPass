@@ -3,16 +3,19 @@ import json
 import colorama
 from colorama import Fore, Style
 
+# colors
 colorama.init()
 magenta = Fore.MAGENTA + Style.BRIGHT
 reset = Style.RESET_ALL
 
+# such cool wow
 print(f'{magenta}██      ██████  ███    ███ {reset}')
 print(f'{magenta}██      ██   ██ ████  ████ {reset}')
 print(f'{magenta}██      ██████  ██ ████ ██ {reset}')
 print(f'{magenta}██      ██      ██  ██  ██ {reset}')
 print(f'{magenta}███████ ██      ██      ██ {reset}')
 
+# see if user is registered for LPM
 registered = False
 with open('data.json') as file:
     data = json.load(file)
