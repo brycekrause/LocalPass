@@ -27,9 +27,7 @@ for line in data:
         username = input('Username: ')
         password = input('Password: ')
         if username == line['User']:
-            print('\nusers match')
             if password == line['Pass']:
-                print('passwords match')
                 access = True
                 print(f'Welcome back {username}!')
             else:
