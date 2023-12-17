@@ -17,6 +17,7 @@ print(f'{magenta}███████ ██      ██      ██ {reset}')
 
 # see if user is registered for LPM
 registered = False
+access = False
 with open('data.json') as file:
     data = json.load(file)
 for line in data:
@@ -29,6 +30,7 @@ for line in data:
             print('\nusers match')
             if password == line['Pass']:
                 print('passwords match')
+                access = True
                 print(f'Welcome back {username}!')
             else:
                 print('\nwrong password')
@@ -47,7 +49,7 @@ if registered == False:
         json.dump(data, json_file, 
                             indent=4,  
                             separators=(',',': '))
-if registered == True:
+if registered == True and access == True:
     services = []
     with open('data.json') as file:
         data = json.load(file)
