@@ -16,9 +16,9 @@ print(f'{magenta}██      ██      ██  ██  ██ {reset}')
 print(f'{magenta}███████ ██      ██      ██ {reset}')
 
 # see if user is registered for LPM
-registered = False
-access = False
 def login():
+    registered = False
+    access = False
     with open('data.json') as file:
         data = json.load(file)
     for line in data:
@@ -31,6 +31,7 @@ def login():
                 if password == line['Pass']:
                     access = True
                     print(f'Welcome back {username}!')
+                    main()
                 else:
                     print('\nwrong password')
                     login()
@@ -50,15 +51,24 @@ def login():
             json.dump(data, json_file, 
                                 indent=4,  
                                 separators=(',',': '))
-    if registered == True and access == True:
-        services = []
-        with open('data.json') as file:
-            data = json.load(file)
-        for line in data:
-            services.append(line['Service'])
-        print(services)
-        print(f'\nYou have {len(services)-1} services registered.\nWhat would you like to do?')
-        print('[1] View credentials\n[2] Register a new service')
-        select = input('> ')
+        login()
+
+def main():
+    services = []
+    with open('data.json') as file:
+        data = json.load(file)
+    for line in data:
+        services.append(line['Service'])
+    print(services)
+    print(f'\nYou have {len(services)-1} services registered.\nWhat would you like to do?')
+    print('[1] View credentials\n[2] Register a new service')
+    select = input('> ')
+    if select == "1":
+        print('view creds')
+    elif select == "2":
+        print('register new')
+    else:
+        print('invalid entry')
+        main()
 
 login()
