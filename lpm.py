@@ -1,9 +1,10 @@
 import random
 import json
+
+# colors
 import colorama
 from colorama import Fore, Style
 
-# colors
 colorama.init()
 magenta = Fore.MAGENTA + Style.BRIGHT
 reset = Style.RESET_ALL
@@ -53,20 +54,46 @@ def login():
                                 separators=(',',': '))
         login()
 
+def view():
+    with open('data.json') as file:
+        data = json.load(file)
+    for line in data:
+        print(f"Service: {line['Service']}")
+        print(f"Username: {line['User']}")
+        print(f"Password: {line['Pass']}")
+    main()
+
+def register():
+    service = input('What service is it? ')
+    username = input('What is your username? ')
+    password = input('What is your password? ')
+    with open('data.json') as file:
+        data = json.load(file)
+        data.append({
+            "Service": service,
+            "User": username,
+            "Pass": password
+        })
+        with open('data.json', 'w') as json_file:
+            json.dump(data, json_file, 
+                                indent=4,  
+                                separators=(',',': '))
+    main()
+    
+
 def main():
     services = []
     with open('data.json') as file:
         data = json.load(file)
     for line in data:
         services.append(line['Service'])
-    print(services)
     print(f'\nYou have {len(services)-1} services registered.\nWhat would you like to do?')
     print('[1] View credentials\n[2] Register a new service')
     select = input('> ')
     if select == "1":
-        print('view creds')
+        view()
     elif select == "2":
-        print('register new')
+        register()
     else:
         print('invalid entry')
         main()
