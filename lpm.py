@@ -79,7 +79,9 @@ def register():
                                 indent=4,  
                                 separators=(',',': '))
     main()
-    
+
+def remove():
+    print('helo worldd')
 
 def main():
     services = []
@@ -88,12 +90,14 @@ def main():
     for line in data:
         services.append(line['Service'])
     print(f'\nYou have {len(services)-1} services registered.\nWhat would you like to do?')
-    print('[1] View credentials\n[2] Register a new service')
+    print('[1] View credentials\n[2] Register a new service\n[3] Remove a service')
     select = input('> ')
     if select == "1":
         view()
     elif select == "2":
         register()
+    elif select == "3":
+        remove()
     else:
         print('invalid entry')
         main()
