@@ -1,6 +1,0 @@
-Local Password Manager
-
-store passwords locally on your system
-encrypt these passwords
-cool ui :)
-basically .txt with a little extra security
