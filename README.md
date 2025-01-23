@@ -1,7 +1,7 @@
-# Tauri + Vanilla
+## Local Password Manager
 
-This template should help get you started developing with Tauri in vanilla HTML, CSS and Javascript.
+# What's wrong with the password manager I am using now?
+Password managers, designed to securely store and manage a user's various passwords, can still be vulnerable to data breaches. A primary risk is that they consolidate multiple passwords into a single access point; if that point is compromised, all stored passwords are exposed.
 
-## Recommended IDE Setup
-
-- [VS Code](https://code.visualstudio.com/) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
+# Why use a local password manager?
+A local password manager enhances security by storing sensitive credentials entirely on the user’s device, reducing the risk of data breaches associated with cloud storage. Since the data never leaves the local environment, it is not susceptible to remote hacking attempts that target centralized servers.
