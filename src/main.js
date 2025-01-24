@@ -90,7 +90,7 @@ function new_account(){
             save_info();
         }
     });
-
+    
     container.appendChild(addAccountDiv);
 }
 
@@ -219,7 +219,9 @@ async function save_info(){
         h1.textContent = error;
         console.error("Error: ", error);
     });
-    appendAccount(titleInput.value, loginInput.value, passwordInput.value, noteInput.value);
+    if (currentTab == "Vault"){
+        appendAccount(titleInput.value, loginInput.value, passwordInput.value, noteInput.value);
+    }
 
     titleInput.value = '';
     loginInput.value = '';
@@ -227,9 +229,9 @@ async function save_info(){
     noteInput.value = '';
 }
 
-const vaultButton = document.getElementById("vaultButton");
-const settingsButton = document.getElementById("settingsButton");
-const sidebarButtons = document.getElementsByClassName("sidebarButton");
+const vaultButton = document.getElementById("vault_btn");
+const settingsButton = document.getElementById("settings_btn");
+const tabButtons = document.getElementsByClassName("tab_btn");
 const currentTabTitle = document.getElementById("currentTabTitle");
 
 document.addEventListener("DOMContentLoaded", function(){
@@ -266,10 +268,10 @@ document.addEventListener("DOMContentLoaded", function(){
     });
 
     // sidebar buttons
-    for (let i = 0; i < sidebarButtons.length; i++){
-        sidebarButtons[i].addEventListener("click", function(){
-            for (let j = 0; j < sidebarButtons.length; j++){
-                sidebarButtons[j].classList.remove("active");
+    for (let i = 0; i < tabButtons.length; i++){
+        tabButtons[i].addEventListener("click", function(){
+            for (let j = 0; j < tabButtons.length; j++){
+                tabButtons[j].classList.remove("active");
             }
         });
     }
@@ -286,8 +288,6 @@ document.addEventListener("DOMContentLoaded", function(){
     vaultButton.addEventListener("click", function(){
         currentTab = "Vault";
         vaultButton.classList.add("active");
-
-        header.children[0].style.visibility = 'visible';
 
         while (mainContainer.firstChild) { mainContainer.removeChild(mainContainer.firstChild); }
 
@@ -308,7 +308,6 @@ document.addEventListener("DOMContentLoaded", function(){
         currentTab = "Settings";
         settingsButton.classList.add("active");
 
-        header.children[0].style.visibility = 'hidden';
         infoDiv.style.visibility = 'hidden';
         addAccountDiv.style.visibility = 'hidden';
         titleInput.value = '';
