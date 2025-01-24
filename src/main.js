@@ -288,6 +288,7 @@ document.addEventListener("DOMContentLoaded", function(){
     vaultButton.addEventListener("click", function(){
         currentTab = "Vault";
         vaultButton.classList.add("active");
+        settingsButton.classList.remove("active");
 
         while (mainContainer.firstChild) { mainContainer.removeChild(mainContainer.firstChild); }
 
@@ -307,6 +308,7 @@ document.addEventListener("DOMContentLoaded", function(){
     settingsButton.addEventListener("click", function(){
         currentTab = "Settings";
         settingsButton.classList.add("active");
+        vaultButton.classList.remove("active");
 
         infoDiv.style.visibility = 'hidden';
         addAccountDiv.style.visibility = 'hidden';
