@@ -116,9 +116,23 @@ fn delete_json(title: String) -> Result<String, Error> {
     Ok("Data deleted successfully".to_string())
 }
 
+#[tauri::command]
+fn erase_json() -> Result<String, Error> {
+    OpenOptions::new()
+        .write(true)
+        .truncate(true)
+        .open("data.json")
+        .map_err(|e| {
+            eprintln!("Failed to open file: {:?}", e);
+            Error::from(e)
+        })?;
+
+    Ok("Data erased successfully".to_string())
+}
+
 pub fn run() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![append_json, read_json, delete_json])
+        .invoke_handler(tauri::generate_handler![append_json, read_json, delete_json, erase_json])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

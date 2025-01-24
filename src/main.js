@@ -229,6 +229,56 @@ async function save_info(){
     noteInput.value = '';
 }
 
+function erase_data(){
+    eraseDataDiv = document.createElement("div");
+    eraseDataDiv.className = "eraseDataDiv popup";
+
+    eraseDataLabel = document.createElement("h1");
+    eraseDataLabel.innerText = "Erase Data";
+
+    eraseDataHeader = document.createElement("div");
+    eraseDataHeader.className = "eraseDataHeader popupHeader";
+
+    eraseDataButtonDiv = document.createElement("div");
+
+    eraseDataButton = document.createElement("button");
+    eraseDataButton.innerText = "Erase";
+    eraseDataButton.className = "confirmEraseButton";
+
+    cancelEraseButton = document.createElement("button");
+    cancelEraseButton.innerText = "Cancel";
+    cancelEraseButton.className = "cancelEraseButton";
+
+    
+    eraseDataButtonDiv.appendChild(eraseDataButton);
+    eraseDataButtonDiv.appendChild(cancelEraseButton);
+
+    eraseDataHeader.appendChild(eraseDataLabel)
+    eraseDataHeader.appendChild(eraseDataButtonDiv);
+
+    eraseDataDiv.appendChild(eraseDataHeader);
+
+    container.appendChild(eraseDataDiv);
+
+    eraseDataButton.addEventListener("click", function(){
+        if (eraseDataButton.innerText == "Erase"){
+            eraseDataButton.innerText = "Confirm?";
+        }else if(eraseDataButton.innerText == "Confirm?"){
+            eraseDataDiv.style.visibility = 'hidden';
+            eraseDataButton.innerText = "Erase";
+        }
+
+        invoke("erase_json");
+    });
+
+    cancelEraseButton.addEventListener("click", function(){
+        eraseDataDiv.style.visibility = 'hidden';
+        eraseDataButton.innerText = "Erase";
+    });
+
+}
+
+
 const vaultButton = document.getElementById("vault_btn");
 const settingsButton = document.getElementById("settings_btn");
 const tabButtons = document.getElementsByClassName("tab_btn");
@@ -364,6 +414,7 @@ document.addEventListener("DOMContentLoaded", function(){
         });
 
         eraseDiv.addEventListener("click", function(){
+            erase_data();
         });
 
         helpDiv.addEventListener("click", function(){
