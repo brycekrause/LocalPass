@@ -57,10 +57,10 @@ html, body{
 .container{
   display: grid;
   grid-template-areas:
-  "sidebar header header"
-  "sidebar main main"
-  "sidebar main main";
-  grid-template-columns: 1fr 4fr 4fr;
+  "header header header"
+  "main main main"
+  "main main main";
+  grid-template-columns: 4fr 4fr 4fr;
   grid-template-rows: 0.2fr 2fr 0.2fr;
   height: 100%;
 }
