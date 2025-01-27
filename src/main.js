@@ -278,6 +278,169 @@ function erase_data(){
 
 }
 
+// password setup
+var letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+var lowercase_letters = letters.toLowerCase();
+var numbers = "1234567890";
+var special = "!@#$%^&*";
+var all_chars = [];
+
+// fix when no checked boxes!!!
+function updateChars(){
+    all_chars = [];
+    if (document.getElementById("special_check").checked){
+        all_chars.push(...special);
+    }
+    if (document.getElementById("numbers_check").checked){
+        all_chars.push(...numbers);
+    }
+    if (document.getElementById("uppercase_check").checked){
+        all_chars.push(...letters);
+    }
+    if (document.getElementById("lowercase_check").checked){
+        all_chars.push(...lowercase_letters);
+    }
+}
+
+function generate_password(length){
+    updateChars();
+
+    var result = '';
+    for (let i = 0; i < length; i++){
+        let char = Math.floor(Math.random() * all_chars.length);
+        result += all_chars[char];
+    }
+    
+    if (length >= 20){
+        passwordOutput.style.fontSize = "22px";
+    }else{
+        passwordOutput.style.fontSize = "28px";
+    }
+
+    passwordOutput.innerText = result;
+
+    return result;
+}
+
+function generate_password_window(){
+    generatepasswordPopup = document.createElement("div");
+    generatepasswordPopup.className = "generatepasswordPopup popup";
+
+    generatepasswordHeader = document.createElement("div");
+    generatepasswordHeader.className = "generatepasswordHeader popupHeader";
+
+    generatepasswordLabel = document.createElement("h1");
+    generatepasswordLabel.innerText = "Generate Password";
+
+    generatepasswordButtonDiv = document.createElement("div");
+
+    generatepasswordButton = document.createElement("button");
+    generatepasswordButton.innerText = "Generate";
+    generatepasswordButton.className = "generatepasswordButton";
+
+    cancelGenerateButton = document.createElement("button");
+    cancelGenerateButton.innerText = "Cancel";
+    cancelGenerateButton.className = "cancelGenerateButton";
+
+    generatepasswordButtonDiv.appendChild(generatepasswordButton);
+    generatepasswordButtonDiv.appendChild(cancelGenerateButton);
+
+    generatepasswordHeader.appendChild(generatepasswordLabel);
+    generatepasswordHeader.appendChild(generatepasswordButtonDiv);
+
+    generatepasswordPopup.appendChild(generatepasswordHeader);
+
+    passwordOutput = document.createElement("p");
+    passwordOutput.id = "passwordOutput";
+
+    lengthSlider = document.createElement("input");
+    lengthSlider.type = "range";
+    lengthSlider.min = 6;
+    lengthSlider.max = 30;
+    lengthSlider.value = 12;
+    lengthSlider.id = "lengthSlider";
+
+    lengthSpan = document.createElement("span");
+    lengthSpan.id = "lengthSpan";
+    lengthSpan.innerText = lengthSlider.value;
+
+    checkboxDiv = document.createElement("div");
+    checkboxDiv.id = "checkboxDiv";
+
+    uppercaseCheck = document.createElement("input");
+    uppercaseCheck.type = "checkbox";
+    uppercaseCheck.id = "uppercase_check";
+    uppercaseLabel = document.createElement("label");
+    uppercaseLabel.innerText = "A-Z";
+
+    lowercaseCheck = document.createElement("input");
+    lowercaseCheck.type = "checkbox";
+    lowercaseCheck.id = "lowercase_check";
+    lowercaseLabel = document.createElement("label");
+    lowercaseLabel.innerText = "a-z";
+
+    numbersCheck = document.createElement("input");
+    numbersCheck.type = "checkbox";
+    numbersCheck.id = "numbers_check";
+    numbersLabel = document.createElement("label");
+    numbersLabel.innerText = "0-9";
+
+    specialCheck = document.createElement("input");
+    specialCheck.type = "checkbox";
+    specialCheck.id = "special_check";
+    specialLabel = document.createElement("label");
+    specialLabel.innerText = "!@#$%^&*";
+
+    checkboxDiv.appendChild(uppercaseCheck);
+    checkboxDiv.appendChild(uppercaseLabel);
+    checkboxDiv.appendChild(lowercaseCheck);
+    checkboxDiv.appendChild(lowercaseLabel);
+
+    checkboxDiv.appendChild(numbersCheck);
+    checkboxDiv.appendChild(numbersLabel);
+    checkboxDiv.appendChild(specialCheck);
+    checkboxDiv.appendChild(specialLabel);
+
+    generatepasswordPopup.appendChild(passwordOutput);
+    generatepasswordPopup.appendChild(lengthSlider);
+    generatepasswordPopup.appendChild(lengthSpan);
+    generatepasswordPopup.appendChild(checkboxDiv); 
+
+    lengthSlider.addEventListener('input', function(){
+        generate_password(lengthSlider.value);
+        lengthSpan.innerText = lengthSlider.value;
+    });
+
+    generatepasswordButton.addEventListener('click', function(){
+        generate_password(lengthSlider.value);
+    });
+
+    cancelGenerateButton.addEventListener('click', function(){
+        generatepasswordPopup.style.visibility = 'hidden';
+    });
+
+    container.appendChild(generatepasswordPopup);
+
+    const checkboxes = [specialCheck, lowercaseCheck, uppercaseCheck, numbersCheck]; 
+    for (checkbox of checkboxes) {
+        checkbox.addEventListener("change", checkboxListener); 
+    }
+
+    generatepasswordPopup.addEventListener("DOMContentLoaded", function(){
+        generate_password(lengthSlider.value);
+    });
+
+    generate_password(lengthSlider.value);
+}
+
+// check for checked checkboxes. Ensure one checkbox is ALWAYS checked
+function checkboxListener(event) {  
+    const checkedCheckboxes = checkboxes.filter(id => document.getElementById(id).checked); 
+    if (checkedCheckboxes.length === 0 && event.target.checked === false) { 
+        event.target.checked = true; 
+    } 
+    generate_password(lengthSlider.value); 
+} 
 
 const vaultButton = document.getElementById("vault_btn");
 const settingsButton = document.getElementById("settings_btn");
@@ -410,7 +573,7 @@ document.addEventListener("DOMContentLoaded", function(){
         mainContainer.appendChild(helpDiv);
 
         generatepasswordDiv.addEventListener("click", function(){
-            window.open("https://passwordsgenerator.net/");
+            generate_password_window();
         });
 
         eraseDiv.addEventListener("click", function(){
@@ -418,7 +581,7 @@ document.addEventListener("DOMContentLoaded", function(){
         });
 
         helpDiv.addEventListener("click", function(){
-            window.open("https://github.com/brycekrause/password-generator");
+            window.open("https://github.com/brycekrause/local-password-manager");
         });
 
     });
