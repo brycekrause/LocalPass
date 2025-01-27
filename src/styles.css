@@ -203,3 +203,13 @@ button:hover{
 .tab_btn.active{
   background-color: var(--primary-light);
 }
+
+.generatepasswordPopup span{
+  margin-top: 0;
+}
+.generatepasswordPopup label{
+  margin-left: 0;
+}
+.generatepasswordPopup input{
+  margin-bottom: 0;
+}

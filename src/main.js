@@ -288,7 +288,7 @@ var all_chars = [];
 function updateChars(){
     all_chars = [];
     if (document.getElementById("special_check").checked){
-        all_chars.push(...special);
+        all_chars.push(...special, ...special);
     }
     if (document.getElementById("numbers_check").checked){
         all_chars.push(...numbers);
@@ -329,7 +329,7 @@ function generate_password_window(){
     generatepasswordHeader.className = "generatepasswordHeader popupHeader";
 
     generatepasswordLabel = document.createElement("h1");
-    generatepasswordLabel.innerText = "Generate Password";
+    generatepasswordLabel.innerText = "Pass Gen";
 
     generatepasswordButtonDiv = document.createElement("div");
 
@@ -466,6 +466,10 @@ document.addEventListener("DOMContentLoaded", function(){
     document.getElementById("new_btn").addEventListener("click", function(){
         if (infoDiv.style.visibility == 'visible'){
             infoDiv.style.visibility = 'hidden';
+        }else if(eraseDiv.style.visibility == 'visible'){
+            eraseDiv.style.visibility = 'hidden';
+        }else if(generatepasswordPopup.style.visibility == 'visible'){
+            generatepasswordPopup.style.visibility = 'hidden';
         }
         addAccountDiv.style.visibility = 'visible';
     });
@@ -510,6 +514,7 @@ document.addEventListener("DOMContentLoaded", function(){
         settingsButton.classList.remove("active");
         generatepasswordPopup.style.visibility = 'hidden';
         eraseDataDiv.style.visibility = 'hidden';
+        document.getElementById("search").disabled = false;
 
         while (mainContainer.firstChild) { mainContainer.removeChild(mainContainer.firstChild); }
 
@@ -540,6 +545,7 @@ document.addEventListener("DOMContentLoaded", function(){
         passwordInput.value = '';
         noteInput.value = '';
         document.getElementById("search").value = '';
+        document.getElementById("search").disabled = true;
 
         while (mainContainer.firstChild) { mainContainer.removeChild(mainContainer.firstChild); }
 
@@ -551,7 +557,7 @@ document.addEventListener("DOMContentLoaded", function(){
         generatepasswordImage = document.createElement("img");
         generatepasswordImage.src = "assets/generate.png";
         generatepasswordText = document.createElement("p");
-        generatepasswordText.innerText = "Generate Password";
+        generatepasswordText.innerText = "Pass Gen";
 
         generatepasswordDiv.appendChild(generatepasswordImage);
         generatepasswordDiv.appendChild(generatepasswordText);
@@ -584,10 +590,25 @@ document.addEventListener("DOMContentLoaded", function(){
 
         generatepasswordDiv.addEventListener("click", function(){
             generatepasswordPopup.style.visibility = 'visible';
+            if (eraseDataDiv.style.visibility == 'visible'){
+                eraseDataDiv.style.visibility = 'hidden';
+            }else if (infoDiv.style.visibility == 'visible'){
+                infoDiv.style.visibility = 'hidden';
+            }else if(addAccountDiv.style.visibility == 'visible'){
+                addAccountDiv.style.visibility = 'hidden';
+            }
+            generate_password(lengthSlider.value);
         });
 
         eraseDiv.addEventListener("click", function(){
             eraseDataDiv.style.visibility = 'visible';
+            if (generatepasswordPopup.style.visibility == 'visible'){
+                generatepasswordPopup.style.visibility = 'hidden';
+            }else if (infoDiv.style.visibility == 'visible'){
+                infoDiv.style.visibility = 'hidden';
+            }else if(addAccountDiv.style.visibility == 'visible'){
+                addAccountDiv.style.visibility = 'hidden';
+            }
         });
 
         helpDiv.addEventListener("click", function(){
@@ -595,10 +616,8 @@ document.addEventListener("DOMContentLoaded", function(){
         });
 
     });
+    
 });
-
-
-
 
 new_account();
 account_info();
