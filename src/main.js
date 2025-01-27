@@ -285,7 +285,6 @@ var numbers = "1234567890";
 var special = "!@#$%^&*";
 var all_chars = [];
 
-// fix when no checked boxes!!!
 function updateChars(){
     all_chars = [];
     if (document.getElementById("special_check").checked){
@@ -370,24 +369,28 @@ function generate_password_window(){
     uppercaseCheck = document.createElement("input");
     uppercaseCheck.type = "checkbox";
     uppercaseCheck.id = "uppercase_check";
+    uppercaseCheck.checked = true;
     uppercaseLabel = document.createElement("label");
     uppercaseLabel.innerText = "A-Z";
 
     lowercaseCheck = document.createElement("input");
     lowercaseCheck.type = "checkbox";
     lowercaseCheck.id = "lowercase_check";
+    lowercaseCheck.checked = true;
     lowercaseLabel = document.createElement("label");
     lowercaseLabel.innerText = "a-z";
 
     numbersCheck = document.createElement("input");
     numbersCheck.type = "checkbox";
     numbersCheck.id = "numbers_check";
+    numbersCheck.checked = true;
     numbersLabel = document.createElement("label");
     numbersLabel.innerText = "0-9";
 
     specialCheck = document.createElement("input");
     specialCheck.type = "checkbox";
     specialCheck.id = "special_check";
+    specialCheck.checked = true;
     specialLabel = document.createElement("label");
     specialLabel.innerText = "!@#$%^&*";
 
@@ -448,6 +451,9 @@ const tabButtons = document.getElementsByClassName("tab_btn");
 const currentTabTitle = document.getElementById("currentTabTitle");
 
 document.addEventListener("DOMContentLoaded", function(){
+    generatepasswordPopup.style.visibility = 'hidden';
+    eraseDataDiv.style.visibility = 'hidden';
+
     invoke("read_json", {f: "data.json"}).then((response) => {
         for (let i = 0; i < response.length; i++){
             appendAccount(response[i].title, response[i].login, response[i].password, response[i].note);
@@ -502,6 +508,8 @@ document.addEventListener("DOMContentLoaded", function(){
         currentTab = "Vault";
         vaultButton.classList.add("active");
         settingsButton.classList.remove("active");
+        generatepasswordPopup.style.visibility = 'hidden';
+        eraseDataDiv.style.visibility = 'hidden';
 
         while (mainContainer.firstChild) { mainContainer.removeChild(mainContainer.firstChild); }
 
@@ -525,6 +533,8 @@ document.addEventListener("DOMContentLoaded", function(){
 
         infoDiv.style.visibility = 'hidden';
         addAccountDiv.style.visibility = 'hidden';
+        generatepasswordPopup.style.visibility = 'hidden';
+        eraseDataDiv.style.visibility = 'hidden';
         titleInput.value = '';
         loginInput.value = '';
         passwordInput.value = '';
@@ -573,11 +583,11 @@ document.addEventListener("DOMContentLoaded", function(){
         mainContainer.appendChild(helpDiv);
 
         generatepasswordDiv.addEventListener("click", function(){
-            generate_password_window();
+            generatepasswordPopup.style.visibility = 'visible';
         });
 
         eraseDiv.addEventListener("click", function(){
-            erase_data();
+            eraseDataDiv.style.visibility = 'visible';
         });
 
         helpDiv.addEventListener("click", function(){
@@ -592,3 +602,5 @@ document.addEventListener("DOMContentLoaded", function(){
 
 new_account();
 account_info();
+generate_password_window();
+erase_data();
