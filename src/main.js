@@ -232,6 +232,7 @@ async function save_info(){
 function erase_data(){
     eraseDataDiv = document.createElement("div");
     eraseDataDiv.className = "eraseDataDiv popup";
+    eraseDataDiv.style.visibility = 'hidden';
 
     eraseDataLabel = document.createElement("h1");
     eraseDataLabel.innerText = "Erase Data";
@@ -324,6 +325,7 @@ function generate_password(length){
 function generate_password_window(){
     generatepasswordPopup = document.createElement("div");
     generatepasswordPopup.className = "generatepasswordPopup popup";
+    generatepasswordPopup.style.visibility = 'hidden';
 
     generatepasswordHeader = document.createElement("div");
     generatepasswordHeader.className = "generatepasswordHeader popupHeader";
@@ -451,9 +453,6 @@ const tabButtons = document.getElementsByClassName("tab_btn");
 const currentTabTitle = document.getElementById("currentTabTitle");
 
 document.addEventListener("DOMContentLoaded", function(){
-    generatepasswordPopup.style.visibility = 'hidden';
-    eraseDataDiv.style.visibility = 'hidden';
-
     invoke("read_json", {f: "data.json"}).then((response) => {
         for (let i = 0; i < response.length; i++){
             appendAccount(response[i].title, response[i].login, response[i].password, response[i].note);
