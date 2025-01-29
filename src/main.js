@@ -447,6 +447,42 @@ function checkboxListener(event) {
     generate_password(lengthSlider.value); 
 } 
 
+function info_window(){
+    infoPopup = document.createElement("div");
+    infoPopup.className = "infoPopup popup";
+    infoPopup.style.visibility = 'hidden';
+
+    infoPopupHeader = document.createElement("div");
+    infoPopupHeader.className = "infoPopupHeader popupHeader";
+
+    infoPopupLabel = document.createElement("h1");
+    infoPopupLabel.innerText = "Info";
+
+    infoPopupButtonDiv = document.createElement("div");
+
+    infoPopupCloseButton = document.createElement("button");
+    infoPopupCloseButton.innerText = "Close";
+    infoPopupCloseButton.className = "infoPopupCloseButton";
+
+    infoPopupButtonDiv.appendChild(infoPopupCloseButton);
+
+    infoPopupHeader.appendChild(infoPopupLabel);
+    infoPopupHeader.appendChild(infoPopupButtonDiv);
+
+    infoPopup.appendChild(infoPopupHeader);
+
+    infoPopupText = document.createElement("p");
+    infoPopupText.innerText = "This is a simple password manager. You can add, delete and view your account information. You can also generate random passwords. All data is stored locally.";
+
+    infoPopup.appendChild(infoPopupText);
+
+    infoPopupCloseButton.addEventListener("click", function(){
+        infoPopup.style.visibility = 'hidden';
+    });
+
+    container.appendChild(infoPopup);
+}
+
 const vaultButton = document.getElementById("vault_btn");
 const settingsButton = document.getElementById("settings_btn");
 const tabButtons = document.getElementsByClassName("tab_btn");
@@ -469,6 +505,8 @@ document.addEventListener("DOMContentLoaded", function(){
             eraseDiv.style.visibility = 'hidden';
         }else if(generatepasswordPopup.style.visibility == 'visible'){
             generatepasswordPopup.style.visibility = 'hidden';
+        }else if(infoPopup.style.visibility == 'visible'){
+            infoPopup.style.visibility = 'hidden';
         }
         addAccountDiv.style.visibility = 'visible';
     });
@@ -513,6 +551,7 @@ document.addEventListener("DOMContentLoaded", function(){
         settingsButton.classList.remove("active");
         generatepasswordPopup.style.visibility = 'hidden';
         eraseDataDiv.style.visibility = 'hidden';
+        infoPopup.style.visibility = 'hidden';
         document.getElementById("search").disabled = false;
 
         while (mainContainer.firstChild) { mainContainer.removeChild(mainContainer.firstChild); }
@@ -539,6 +578,7 @@ document.addEventListener("DOMContentLoaded", function(){
         addAccountDiv.style.visibility = 'hidden';
         generatepasswordPopup.style.visibility = 'hidden';
         eraseDataDiv.style.visibility = 'hidden';
+        infoPopup.style.visibility = 'hidden';
         titleInput.value = '';
         loginInput.value = '';
         passwordInput.value = '';
@@ -572,20 +612,20 @@ document.addEventListener("DOMContentLoaded", function(){
         eraseDiv.appendChild(eraseImage);
         eraseDiv.appendChild(eraseText);
 
-        helpDiv = document.createElement("div");
-        helpDiv.id = "helpDiv";
+        infoDiv = document.createElement("div");
+        infoDiv.id = "infoDiv";
 
-        helpImage = document.createElement("img");
-        helpImage.src = "assets/help.png";
-        helpText = document.createElement("p");
-        helpText.innerText = "Help";
+        infoImage = document.createElement("img");
+        infoImage.src = "assets/info.png";
+        infoText = document.createElement("p");
+        infoText.innerText = "Info";
 
-        helpDiv.appendChild(helpImage);
-        helpDiv.appendChild(helpText);
+        infoDiv.appendChild(infoImage);
+        infoDiv.appendChild(infoText);
 
         mainContainer.appendChild(generatepasswordDiv);
         mainContainer.appendChild(eraseDiv);
-        mainContainer.appendChild(helpDiv);
+        mainContainer.appendChild(infoDiv);
 
         generatepasswordDiv.addEventListener("click", function(){
             generatepasswordPopup.style.visibility = 'visible';
@@ -595,6 +635,8 @@ document.addEventListener("DOMContentLoaded", function(){
                 infoDiv.style.visibility = 'hidden';
             }else if(addAccountDiv.style.visibility == 'visible'){
                 addAccountDiv.style.visibility = 'hidden';
+            }else if(infoPopup.style.visibility == 'visible'){
+                infoPopup.style.visibility = 'hidden';
             }
             generate_password(lengthSlider.value);
         });
@@ -607,11 +649,22 @@ document.addEventListener("DOMContentLoaded", function(){
                 infoDiv.style.visibility = 'hidden';
             }else if(addAccountDiv.style.visibility == 'visible'){
                 addAccountDiv.style.visibility = 'hidden';
+            }else if(infoPopup.style.visibility == 'visible'){
+                infoPopup.style.visibility = 'hidden';
             }
         });
 
-        helpDiv.addEventListener("click", function(){
-            window.open("https://github.com/brycekrause/local-password-manager");
+        infoDiv.addEventListener("click", function(){
+            infoPopup.style.visibility = 'visible';
+            if (generatepasswordPopup.style.visibility == 'visible'){
+                generatepasswordPopup.style.visibility = 'hidden';
+            }else if (infoDiv.style.visibility == 'visible'){
+                infoDiv.style.visibility = 'hidden';
+            }else if(addAccountDiv.style.visibility == 'visible'){
+                addAccountDiv.style.visibility = 'hidden';
+            }else if(eraseDataDiv.style.visibility == 'visible'){
+                eraseDataDiv.style.visibility = 'hidden';
+            }
         });
 
     });
@@ -622,3 +675,4 @@ new_account();
 account_info();
 generate_password_window();
 erase_data();
+info_window();
