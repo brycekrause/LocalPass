@@ -6,7 +6,6 @@ const mainContainer = document.getElementById("mainContainer");
 const header = document.getElementById("header");
 const container = document.getElementById("container");
 
-var currentAccountDiv = null;
 var currentTab = "Vault";
 
 function new_account(){
@@ -192,21 +191,24 @@ function appendAccount(title, login, password, note){
     accountDiv.appendChild(accountTitle);
 
     accountDiv.addEventListener("click", function(){
-        currentAccountDiv = accountDiv;
         if (infoDiv.style.visibility == 'visible'){
             infoDiv.style.visibility = 'hidden';
         }else if (addAccountDiv.style.visibility == 'visible'){
             addAccountDiv.style.visibility = 'hidden';
         }
-        
+        infoDiv.style.visibility = 'visible';
         infoTitle.innerText = title;
         infoLoginValue.innerText = login;
         infoPasswordValue.innerText = password;
         infoNoteValue.innerText = note;
-        infoDiv.style.visibility = 'visible';
+        h1.innerText = title + login + password + note;
     });
 
     mainContainer.appendChild(accountDiv);
+}
+
+function parseAccountData(){
+    
 }
 
 async function save_info(){
@@ -488,6 +490,12 @@ const settingsButton = document.getElementById("settings_btn");
 const tabButtons = document.getElementsByClassName("tab_btn");
 const currentTabTitle = document.getElementById("currentTabTitle");
 
+new_account();
+account_info();
+generate_password_window();
+erase_data();
+info_window();
+
 document.addEventListener("DOMContentLoaded", function(){
     invoke("read_json", {f: "data.json"}).then((response) => {
         for (let i = 0; i < response.length; i++){
@@ -499,6 +507,7 @@ document.addEventListener("DOMContentLoaded", function(){
     });
 
     document.getElementById("new_btn").addEventListener("click", function(){
+        addAccountDiv.style.visibility = 'visible';
         if (infoDiv.style.visibility == 'visible'){
             infoDiv.style.visibility = 'hidden';
         }else if(eraseDiv.style.visibility == 'visible'){
@@ -508,7 +517,6 @@ document.addEventListener("DOMContentLoaded", function(){
         }else if(infoPopup.style.visibility == 'visible'){
             infoPopup.style.visibility = 'hidden';
         }
-        addAccountDiv.style.visibility = 'visible';
     });
 
     document.getElementById("search").addEventListener("input", function(){
@@ -612,20 +620,20 @@ document.addEventListener("DOMContentLoaded", function(){
         eraseDiv.appendChild(eraseImage);
         eraseDiv.appendChild(eraseText);
 
-        infoDiv = document.createElement("div");
-        infoDiv.id = "infoDiv";
+        infoButton = document.createElement("div");
+        infoButton.id = "infoButton";
 
         infoImage = document.createElement("img");
         infoImage.src = "assets/info.png";
         infoText = document.createElement("p");
         infoText.innerText = "Info";
 
-        infoDiv.appendChild(infoImage);
-        infoDiv.appendChild(infoText);
+        infoButton.appendChild(infoImage);
+        infoButton.appendChild(infoText);
 
         mainContainer.appendChild(generatepasswordDiv);
         mainContainer.appendChild(eraseDiv);
-        mainContainer.appendChild(infoDiv);
+        mainContainer.appendChild(infoButton);
 
         generatepasswordDiv.addEventListener("click", function(){
             generatepasswordPopup.style.visibility = 'visible';
@@ -654,7 +662,7 @@ document.addEventListener("DOMContentLoaded", function(){
             }
         });
 
-        infoDiv.addEventListener("click", function(){
+        infoButton.addEventListener("click", function(){
             infoPopup.style.visibility = 'visible';
             if (generatepasswordPopup.style.visibility == 'visible'){
                 generatepasswordPopup.style.visibility = 'hidden';
@@ -670,9 +678,3 @@ document.addEventListener("DOMContentLoaded", function(){
     });
     
 });
-
-new_account();
-account_info();
-generate_password_window();
-erase_data();
-info_window();
