@@ -473,6 +473,10 @@ function info_window(){
 
     infoPopup.appendChild(infoPopupHeader);
 
+    infoPopupGithub = document.createElement("button");
+    infoPopupGithub.href= "https://github.com/brycekrause/local-password-manager";
+    infoPopupGithub.innerText = "Github";
+
     infoPopupText = document.createElement("p");
     infoPopupText.innerText = "This is a simple password manager. You can add, delete and view your account information. You can also generate random passwords. All data is stored locally.";
 
