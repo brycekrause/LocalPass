@@ -473,14 +473,34 @@ function info_window(){
 
     infoPopup.appendChild(infoPopupHeader);
 
+    infoPopupButtons = document.createElement("div");
+
     infoPopupGithub = document.createElement("button");
-    infoPopupGithub.href= "https://github.com/brycekrause/local-password-manager";
     infoPopupGithub.innerText = "Github";
+    infoPopupGithub.onclick = function() {
+        window.open("https://github.com/brycekrause/local-password-manager", "_blank");
+    };
+
+    infoPopupIssue = document.createElement("button");
+    infoPopupIssue.onclick = function() {
+        window.open("https://github.com/brycekrause/local-password-manager/issues", "_blank");
+    };
+    infoPopupIssue.innerText = "Report Issue";
+
+
 
     infoPopupText = document.createElement("p");
-    infoPopupText.innerText = "This is a simple password manager. You can add, delete and view your account information. You can also generate random passwords. All data is stored locally.";
+    infoPopupText.innerText = "Our Local Password Manager helps you securely store and manage your passwords directly on your device. With robust encryption and user-friendly features, your credentials are safe and always within reach.";
 
     infoPopup.appendChild(infoPopupText);
+
+    infoPopupButtons.appendChild(infoPopupGithub);
+    infoPopupButtons.appendChild(infoPopupIssue);
+
+    infoPopup.appendChild(infoPopupButtons);
+
+
+    
 
     infoPopupCloseButton.addEventListener("click", function(){
         infoPopup.style.visibility = 'hidden';
