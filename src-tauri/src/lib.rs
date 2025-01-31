@@ -1,3 +1,6 @@
+mod cryptography;
+
+use cryptography::{decrypt, encrypt};
 use serde::{Serialize, Deserialize};
 use serde_json::{to_writer_pretty, from_reader, Value};
 use std::fs::OpenOptions;
@@ -14,10 +17,11 @@ struct Data{
 
 #[tauri::command]
 fn append_json(title: &str, login: &str, password: &str, note: &str) -> Result<String, Error> {
+    let encrypted_password = encrypt(password);
     let data = Data {
         title: title.to_string(),
         login: login.to_string(),
-        password: password.to_string(),
+        password: encrypted_password,
         note: note.to_string(),
     };
 
@@ -72,8 +76,13 @@ fn read_json(f: String) -> Result<Vec<Data>, Error> {
         .open(f)
         .map_err(|e| Error::from(e))?;
     let reader = BufReader::new(file);
-    let data: Vec<Data> = serde_json::from_reader(reader)
+    let mut data: Vec<Data> = serde_json::from_reader(reader)
         .map_err(|e| Error::from(e))?;
+
+    for entry in &mut data {
+        entry.password = decrypt(&entry.password);
+    }
+
     Ok(data)
 }
 
