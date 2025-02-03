@@ -2,5 +2,5 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 fn main() {
-    pass_manager_lib::run()
+    local_pass_lib::run()
 }

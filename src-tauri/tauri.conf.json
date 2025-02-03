@@ -1,8 +1,8 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "pass-manager",
+  "productName": "LocalPass",
   "version": "0.1.0",
-  "identifier": "com.pass-manager.app",
+  "identifier": "com.localpass.app",
   "build": {
     "frontendDist": "../src"
   },
@@ -10,7 +10,7 @@
     "withGlobalTauri": true,
     "windows": [
       {
-        "title": "Local Password Manager",
+        "title": "LocalPass",
         "width": 800,
         "height": 600
       }
