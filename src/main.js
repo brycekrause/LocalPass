@@ -106,16 +106,58 @@ function account_info(){
 
     infoLogin = document.createElement("h3");
     infoLogin.innerText = "Login";
+
+    infoLoginDiv = document.createElement("div");
+    infoLoginDiv.className = "infoContentsDiv";
+
     infoLoginValue = document.createElement("p");
     infoLoginValue.innerText = "";
+    loginCopyButton = document.createElement("img");
+    loginCopyButton.src = "assets/copy.png";
+    loginCopyButton.style.width = "16px";
+    loginCopyButton.style.display = "inline";
+    loginCopyButton.style.margin = "5px auto";
+    loginCopyButton.addEventListener("mouseover", function(){
+        loginCopyButton.style.cursor = "pointer";
+        loginCopyButton.style.opacity = "0.5";
+    });
+    loginCopyButton.addEventListener("mouseout", function(){
+        loginCopyButton.style.opacity = "1";
+    });
+    loginCopyButton.addEventListener("click", function(){
+        navigator.clipboard.writeText(infoLoginValue.innerText);
+    });
 
     infoPassword = document.createElement("h3");
     infoPassword.innerText = "Password";
+
+    infoPasswordDiv = document.createElement("div");
+    infoPasswordDiv.className = "infoContentsDiv";
+
     infoPasswordValue = document.createElement("p");
     infoPasswordValue.innerText = "";
+    passwordCopyButton = document.createElement("img");
+    passwordCopyButton.src = "assets/copy.png";
+    passwordCopyButton.style.width = "16px";
+    passwordCopyButton.style.display = "inline";
+    passwordCopyButton.style.margin = "5px auto";
+    passwordCopyButton.addEventListener("mouseover", function(){
+        passwordCopyButton.style.cursor = "pointer";
+        passwordCopyButton.style.opacity = "0.5";
+    });
+    passwordCopyButton.addEventListener("mouseout", function(){
+        passwordCopyButton.style.opacity = "1";
+    });
+    passwordCopyButton.addEventListener("click", function(){
+        navigator.clipboard.writeText(infoPasswordValue.innerText);
+    });
 
     infoNote = document.createElement("h3");
     infoNote.innerText = "Note";
+
+    infoNoteDiv = document.createElement("div");
+    infoNoteDiv.className = "infoContentsDiv";
+
     infoNoteValue = document.createElement("p");
     infoNoteValue.innerText = "";
 
@@ -134,14 +176,21 @@ function account_info(){
 
     infoHeader.appendChild(infoTitle);
     infoHeader.appendChild(info_buttonDiv);
-
     infoDiv.appendChild(infoHeader);
+
     infoDiv.appendChild(infoLogin);
-    infoDiv.appendChild(infoLoginValue);
+    infoLoginDiv.appendChild(infoLoginValue);
+    infoLoginDiv.appendChild(loginCopyButton);
+    infoDiv.appendChild(infoLoginDiv);
+
     infoDiv.appendChild(infoPassword);
-    infoDiv.appendChild(infoPasswordValue);
+    infoPasswordDiv.appendChild(infoPasswordValue);
+    infoPasswordDiv.appendChild(passwordCopyButton);
+    infoDiv.appendChild(infoPasswordDiv);
+
     infoDiv.appendChild(infoNote);
-    infoDiv.appendChild(infoNoteValue);
+    infoNoteDiv.appendChild(infoNoteValue);
+    infoDiv.appendChild(infoNoteDiv);
 
     info_delete_button.addEventListener("click", function(){
         if (info_delete_button.innerText == "Delete"){

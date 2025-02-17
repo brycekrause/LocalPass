@@ -177,10 +177,16 @@ html, body{
   margin: 0px 10px;
 }
 .popup p{
+  display: inline;
+}
+.popup img{
+  float: right;
+}
+.infoContentsDiv{
   background-color: var(--surface-light);
+  border-radius: 5px;
   margin: 10px;
   padding: 5px;
-  border-radius: 5px;
   border: none;
 }
 button{
